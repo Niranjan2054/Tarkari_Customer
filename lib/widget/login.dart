@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tarkari_customer/widget/assets.dart';
+import 'package:tarkari_customer/widget/list.dart';
 
 class LoginFourPage extends StatelessWidget {
   static final String path = "lib/src/pages/login/login4.dart";
   final String background = loginBack;
   final _formkey = GlobalKey<FormState>();
+  final username = TextEditingController();
+  final contact = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +53,7 @@ class LoginFourPage extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
+                              controller: username,
                               validator: (value){
                                 if(value.isEmpty){
                                   return 'Please enter username';
@@ -66,6 +70,7 @@ class LoginFourPage extends StatelessWidget {
                             ),
                             SizedBox(height: 10.0,),
                             TextFormField(
+                              controller: contact,
                               validator: (value){
                                 if(value.isEmpty){
                                   return 'Please enter contact number';
@@ -89,15 +94,14 @@ class LoginFourPage extends StatelessWidget {
                               child: RaisedButton(
                                 child: Text("Sign In".toUpperCase()),
                                 onPressed: (){
-                                  if(_formkey.currentState.validate()){
-                                    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));                                  }
+                                  print(username.text+" \n"+contact.text);
+                                  navigateToList(context,username.text,contact.text);                                  
                                 },
                               ),
                             ),
                           ],
                         )
                       ),
-                      
                     ],
                   ),
               ),
@@ -109,3 +113,6 @@ class LoginFourPage extends StatelessWidget {
   }
 }
 
+Future navigateToList(context,username,contact) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => VendorList(username: username,contact: contact,)));
+}
