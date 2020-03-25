@@ -7,10 +7,42 @@ import 'package:tarkari_customer/widget/confirmation.dart';
 
 class VegetableList extends StatelessWidget {
   VegetableList({Key key,this.username,this.contact,this.vendor}):super(key:key);
-  static final String path = "lib/src/pages/ecommerce/cart2.dart";
+  static final String path = "widget/cart.dart";
   final String username;
   final String contact;
   final Map vendor;
+  final List<Map> VegetableLists = [
+    {
+      "name": 'Tomato',
+      "price": 100,
+      "image": 'assets/tomato.png',
+      'quantity':0,
+    },
+    {
+      "name": 'Potato',
+      "price": 100,
+      "image": 'assets/tomato.png',
+      'quantity':0,
+    },
+    {
+      "name": 'Brinjal',
+      "price": 10,
+      "image": 'assets/tomato.png',
+      'quantity':0,
+    },
+    {
+      "name": 'CauliFlower',
+      "price": 100,
+      "image": 'assets/tomato.png',
+      'quantity':0,
+    },
+    {
+      "name": 'Cabbage',
+      "price": 100,
+      "image": 'assets/tomato.png',
+      'quantity':0,
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +53,7 @@ class VegetableList extends StatelessWidget {
           children: <Widget>[
             Flexible(
               child: ListView.builder(
-                itemCount: 6,
+                itemCount: VegetableLists.length,
                 itemBuilder: (context, int index) {
                   return cartItems(index);
                 },
@@ -53,28 +85,18 @@ class VegetableList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: <Widget>[
+                  SizedBox(height: 10,),
                   Row(
                     children: <Widget>[
                       Flexible(
                         child: Text(
-                          "Item 1" + index.toString(),
+                          VegetableLists[index]['name'].toString(),
                           overflow: TextOverflow.fade,
                           softWrap: true,
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 15),
                         ),
                       ),
-                      Container(
-                        width: 50,
-                        child: IconButton(
-                          onPressed: () {
-                            print("Button Pressed");
-                          },
-                          color: Colors.red,
-                          icon: Icon(Icons.delete),
-                          iconSize: 20,
-                        ),
-                      )
                     ],
                   ),
                   Row(
@@ -84,7 +106,7 @@ class VegetableList extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        '\$200',
+                        'Rs. '+VegetableLists[index]["price"].toString(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w300),
                       )
@@ -96,7 +118,7 @@ class VegetableList extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text('\$400',
+                      Text('Rs. '+(VegetableLists[index]["price"]*VegetableLists[index]['quantity']).toString(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w300,
@@ -107,14 +129,19 @@ class VegetableList extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        "Ships Free",
+                        "Shipment",
                         style: TextStyle(color: Colors.orange),
                       ),
                       Spacer(),
                       Row(
                         children: <Widget>[
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              if(VegetableLists[index]['quantity']>0){
+                                VegetableLists[index]['quantity']-=1;
+                                print(VegetableLists[index]['quantity']);
+                              }
+                            },
                             splashColor: Colors.redAccent.shade200,
                             child: Container(
                               decoration: BoxDecoration(
@@ -136,14 +163,17 @@ class VegetableList extends StatelessWidget {
                           Card(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('2'),
+                              child: Text(VegetableLists[index]['quantity'].toString()),
                             ),
                           ),
                           SizedBox(
                             width: 4,
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              VegetableLists[index]['quantity']+=1;
+                              print(VegetableLists[index]['quantity']);
+                            },
                             splashColor: Colors.lightBlue,
                             child: Container(
                               decoration: BoxDecoration(

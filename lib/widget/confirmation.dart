@@ -62,8 +62,10 @@ class Confirmation extends StatelessWidget {
                       ),
                     ),
                   ),
+                  _checkoutSection(context)
                 ],
               ),
+
          ),
       );
    }
@@ -78,3 +80,58 @@ Widget CustomRow(title,value){
             ],
           );
 }
+
+
+Widget _checkoutSection(BuildContext context) {
+  return Material(
+    color: Colors.black12,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "Checkout Price:",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                ),
+                Spacer(),
+                Text(
+                  "Rs. 5000",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                )
+              ],
+            )),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Material(
+            color: Colors.red,
+            elevation: 1.0,
+            child: InkWell(
+              splashColor: Colors.redAccent,
+              onTap: () {
+                // navigateToConfirmation(context,username,contact,vendor);
+              },
+              child: Container(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "Checkout",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
