@@ -1,4 +1,3 @@
-import 'dart:js';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tarkari_customer/widget/rounded_bordered_container.dart';
@@ -28,7 +27,7 @@ class VegetableList extends StatelessWidget {
                 },
               ),
             ),
-            _checkoutSection()
+            _checkoutSection(context)
           ],
         ));
   }
@@ -173,7 +172,7 @@ class VegetableList extends StatelessWidget {
     );
   }
 
-  Widget _checkoutSection() {
+  Widget _checkoutSection(BuildContext context) {
     return Material(
       color: Colors.black12,
       child: Column(
