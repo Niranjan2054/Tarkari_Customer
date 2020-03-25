@@ -11,8 +11,6 @@ class ConfirmationPage extends StatelessWidget {
    // This widget is the root of your application.
    @override
    Widget build(BuildContext context) {
-     print('confirmation');
-     print(vegetableList);
       return MaterialApp(
          title: 'Hello World Demo Application',
          theme: ThemeData(
@@ -29,11 +27,17 @@ class Confirmation extends StatelessWidget {
    final String contact;
    final Map vendor;
    final List<Map> vegetableList;
+   int total=0;
+   void calculateTotal(){
+     for (var i = 0; i < vegetableList.length; i++) {
+       this.total += vegetableList[i]['price'] * vegetableList[i]['quantity'];
+       print(this.total);
+     }
+   }
 
    @override
    Widget build(BuildContext context) {
-     print('Confirmation widget');
-     print(vegetableList);
+     calculateTotal();
       return Scaffold(
          appBar: AppBar(
             title: Text(this.title),
@@ -68,7 +72,7 @@ class Confirmation extends StatelessWidget {
                       ),
                     ),
                   ),
-                  _checkoutSection(context)
+                  _checkoutSection(context,this.total)
                 ],
               ),
 
@@ -88,7 +92,7 @@ Widget CustomRow(title,value){
 }
 
 
-Widget _checkoutSection(BuildContext context) {
+Widget _checkoutSection(BuildContext context,int total) {
   return Material(
     color: Colors.black12,
     child: Column(
@@ -104,7 +108,7 @@ Widget _checkoutSection(BuildContext context) {
                 ),
                 Spacer(),
                 Text(
-                  "Rs. 5000",
+                  "Rs. "+total.toString(),
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 )
               ],
@@ -115,7 +119,7 @@ Widget _checkoutSection(BuildContext context) {
             color: Colors.red,
             elevation: 1.0,
             child: InkWell(
-              splashColor: Colors.redAccent,
+              splashColor: Colors.blueAccent,
               onTap: () {
                 // navigateToConfirmation(context,username,contact,vendor);
               },
@@ -124,7 +128,7 @@ Widget _checkoutSection(BuildContext context) {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    "Checkout",
+                    "Submit",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,

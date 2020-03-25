@@ -12,7 +12,7 @@ class DataTableExample extends StatefulWidget {
 class _DataTableExampleState extends State<DataTableExample> {
   _DataTableExampleState({Key key,this.vegetableList});
   final List<Map> vegetableList;
-  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+  int _rowsPerPage = 5;
   @override
   Widget build(BuildContext context) {
     print('datatable');
@@ -28,7 +28,7 @@ class _DataTableExampleState extends State<DataTableExample> {
           });
         },
         columns: kTableColumns,
-        source: DessertDataSource(desserts: List<Dessert>.generate(vegetableList.length, (index) => Dessert(vegetableList[index]['name'], vegetableList[index]['price'], vegetableList[index]['quantity'], vegetableList[index]['price']*vegetableList[index]['quantity']))),
+        source: DessertDataSource(desserts: List<Dessert>.generate(vegetableList.length, (index) => Dessert(index+1,vegetableList[index]['name'], vegetableList[index]['price'], vegetableList[index]['quantity'], vegetableList[index]['price']*vegetableList[index]['quantity']))),
       ),
     );
   }
@@ -36,6 +36,9 @@ class _DataTableExampleState extends State<DataTableExample> {
 
 ////// Columns in table.
 const kTableColumns = <DataColumn>[
+  DataColumn(
+    label: const Text('S.N.'),
+  ),
   DataColumn(
     label: const Text('Particular Item'),
   ),
@@ -56,31 +59,21 @@ const kTableColumns = <DataColumn>[
 
 ////// Data class.
 class Dessert {
-  Dessert(this.name, this.rate, this.quantity, this.amount);
+  Dessert(this.sn,this.name, this.rate, this.quantity, this.amount);
+  final int sn;
   final String name;
   final int rate;
   final int quantity;
   final int amount;
 }
 
-Dessert Convert(Map vegetable){
-  return new Dessert(vegetable['name'], vegetable['price'], vegetable['quantity'],  vegetable['price']* vegetable['quantity']);
-}
-
 ////// Data source class for obtaining row data for PaginatedDataTable.
 class DessertDataSource extends DataTableSource {
   DessertDataSource({this.desserts});
   int _selectedCount = 0;
-  // final List<Map> vegetableList;
-  
-  List<Dessert> desserts;
-  
-  //  = <Dessert>[
-  //   new Dessert('Frozen yogurt', 159, 6.0, 24),
-  //   new Dessert('Ice cream sandwich', 237, 9.0, 37),
-  // ];
-  
 
+  List<Dessert> desserts;
+ 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
@@ -89,6 +82,7 @@ class DessertDataSource extends DataTableSource {
     return DataRow.byIndex(
         index: index,
         cells: <DataCell>[
+          DataCell(Text('${dessert.sn}')),
           DataCell(Text('${dessert.name}')),
           DataCell(Text('${dessert.rate}')),
           DataCell(Text('${dessert.quantity}')),

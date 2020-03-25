@@ -266,6 +266,5 @@ class _VegetableState extends State<Vegetable> {
 }
 
 Future navigateToConfirmation(context,username,contact,Map vendor, List<Map> vegetableLists) async {
-  print(vegetableLists);
   Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(username: username,contact: contact,vendor: vendor,vegetableList: vegetableLists,)));
 }
