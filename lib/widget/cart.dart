@@ -146,10 +146,12 @@ class _VegetableState extends State<Vegetable> {
                         children: <Widget>[
                           InkWell(
                             onTap: () {
-                              if(vegetableLists[index]['quantity']>0){
+                              setState(() {
+                                if(vegetableLists[index]['quantity']>0){
                                 vegetableLists[index]['quantity']-=1;
                                 print(vegetableLists[index]['quantity']);
                               }
+                              });
                             },
                             splashColor: Colors.redAccent.shade200,
                             child: Container(
@@ -180,8 +182,10 @@ class _VegetableState extends State<Vegetable> {
                           ),
                           InkWell(
                             onTap: () {
-                              vegetableLists[index]['quantity']+=1;
-                              print(vegetableLists[index]['quantity']);
+                              setState(() {
+                                vegetableLists[index]['quantity']+=1;
+                                print(vegetableLists[index]['quantity']);  
+                              });
                             },
                             splashColor: Colors.lightBlue,
                             child: Container(
