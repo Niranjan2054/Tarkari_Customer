@@ -90,10 +90,6 @@ class _VendorListState extends State<VendorList> {
   ];
   bool change = false;
   List<Map>  temp;
-  bool compare(Map vendor, String text){
-    String condition = (vendor['name']+vendor['location'].toString()+vendor['contact'].toString()).toString();
-    return (condition.contains(text));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +168,7 @@ class _VendorListState extends State<VendorList> {
                           onChanged: (text){
                             setState(() {
                               change = true;
-                              temp=VendorLists.where((vendor) => (vendor['name']+vendor['location'].toString()+vendor['contact'].toString()).toString().contains(text)).toList();
+                              temp=VendorLists.where((vendor) => (vendor['name']+vendor['location'].toString()+vendor['contact'].toString()).toString().toLowerCase().contains(text.toLowerCase())).toList();
                               print(temp);
                             });;
                           },
