@@ -51,7 +51,14 @@ class _VegetableState extends State<Vegetable> {
       'quantity':0,
     },
   ];
-
+  int total=0;
+   void calculateTotal(){
+     this.total =0;
+     for (var i = 0; i < vegetableLists.length; i++) {
+       this.total += vegetableLists[i]['price'] * vegetableLists[i]['quantity'];
+       print(this.total);
+     }
+   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +75,7 @@ class _VegetableState extends State<Vegetable> {
                 },
               ),
             ),
-            _checkoutSection(context)
+            _checkoutSection(context,total)
           ],
         ));
   }
@@ -149,6 +156,7 @@ class _VegetableState extends State<Vegetable> {
                               setState(() {
                                 if(vegetableLists[index]['quantity']>0){
                                 vegetableLists[index]['quantity']-=1;
+                                calculateTotal();
                                 print(vegetableLists[index]['quantity']);
                               }
                               });
@@ -184,6 +192,7 @@ class _VegetableState extends State<Vegetable> {
                             onTap: () {
                               setState(() {
                                 vegetableLists[index]['quantity']+=1;
+                                calculateTotal();
                                 print(vegetableLists[index]['quantity']);  
                               });
                             },
@@ -215,7 +224,7 @@ class _VegetableState extends State<Vegetable> {
     );
   }
 
-  Widget _checkoutSection(BuildContext context) {
+  Widget _checkoutSection(BuildContext context,int total) {
     return Material(
       color: Colors.black12,
       child: Column(
@@ -231,7 +240,7 @@ class _VegetableState extends State<Vegetable> {
                   ),
                   Spacer(),
                   Text(
-                    "Rs. 5000",
+                    "Rs. "+total.toString(),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   )
                 ],
