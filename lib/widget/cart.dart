@@ -3,6 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tarkari_customer/widget/rounded_bordered_container.dart';
 import 'package:tarkari_customer/widget/animation.dart';
+import 'package:tarkari_customer/widget/confirmation.dart';
+
 
 class VegetableList extends StatelessWidget {
   VegetableList({Key key,this.username,this.contact,this.vendor}):super(key:key);
@@ -226,5 +228,5 @@ class VegetableList extends StatelessWidget {
 }
 
 Future navigateToConfirmation(context,username,contact,Map vendor) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(username: username,contact: contact,)));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(username: username,contact: contact,vendor: vendor)));
 }

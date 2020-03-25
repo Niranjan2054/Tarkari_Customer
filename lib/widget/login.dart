@@ -4,7 +4,7 @@ import 'package:tarkari_customer/widget/assets.dart';
 import 'package:tarkari_customer/widget/list.dart';
 
 class LoginFourPage extends StatelessWidget {
-  static final String path = "lib/src/pages/login/login4.dart";
+  static final String path = "widget/login.dart";
   final String background = loginBack;
   final _formkey = GlobalKey<FormState>();
   final username = TextEditingController();
