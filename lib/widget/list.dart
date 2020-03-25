@@ -19,9 +19,9 @@ class _VendorListState extends State<VendorList> {
   final Color primary = Colors.blue;
   final Color secondary = Colors.black;
   final _formKey = GlobalKey<FormState>();
+  
 
-
-  final List<Map> VendorLists = [
+  List<Map> VendorLists = [
     {
       "name": "Jagati Alu Pyaj Bhandar",
       "location": "Jagati, Bhaktapur",
@@ -88,6 +88,12 @@ class _VendorListState extends State<VendorList> {
 
     
   ];
+  bool change = false;
+  List<Map>  temp;
+  bool compare(Map vendor, String text){
+    String condition = (vendor['name']+vendor['location'].toString()+vendor['contact'].toString()).toString();
+    return (condition.contains(text));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +110,13 @@ class _VendorListState extends State<VendorList> {
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
                 child: ListView.builder(
-                    itemCount: VendorLists.length,
+                    itemCount: (change)?temp.length:VendorLists.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return buildList(context, index,this.username,this.contact);
+                      if(change){
+                        return buildListTemp(context, index,this.username,this.contact);
+                      }else{
+                        return buildList(context, index,this.username,this.contact);
+                      }
                     }),
               ),
               Container(
@@ -161,7 +171,9 @@ class _VendorListState extends State<VendorList> {
                           key: _formKey,
                           onChanged: (text){
                             setState(() {
-                              
+                              change = true;
+                              temp=VendorLists.where((vendor) => (vendor['name']+vendor['location'].toString()+vendor['contact'].toString()).toString().contains(text)).toList();
+                              print(temp);
                             });;
                           },
                           // controller: TextEditingController(text: locations[0]),
@@ -265,6 +277,90 @@ class _VendorListState extends State<VendorList> {
                         width: 5,
                       ),
                       Text(VendorLists[index]['contact'],
+                          style: TextStyle(
+                              color: secondary, fontSize: 13, letterSpacing: .3)),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      )
+    );
+  }
+  Widget buildListTemp(BuildContext context, int index,String username,String contact) {
+    return FlatButton(
+      onPressed: (){
+        Navigator.of(context).push(_createRoute(username,contact,temp[index]));
+      }, 
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: Colors.white,
+        ),
+        width: double.infinity,
+        height: 110,
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: 50,
+              height: 50,
+              margin: EdgeInsets.only(right: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(width: 3, color: secondary),
+                image: DecorationImage(
+                    image: CachedNetworkImageProvider(temp[index]['logoText']),
+                    fit: BoxFit.fill),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    temp[index]['name'],
+                    style: TextStyle(
+                        color: secondary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on,
+                        color: secondary,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(temp[index]['location'],
+                          style: TextStyle(
+                              color: secondary, fontSize: 13, letterSpacing: .3)),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.contact_phone,
+                        color: secondary,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(temp[index]['contact'],
                           style: TextStyle(
                               color: secondary, fontSize: 13, letterSpacing: .3)),
                     ],
