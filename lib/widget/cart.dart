@@ -4,14 +4,22 @@ import 'package:tarkari_customer/widget/rounded_bordered_container.dart';
 import 'package:tarkari_customer/widget/animation.dart';
 import 'package:tarkari_customer/widget/confirmation.dart';
 
+class Vegetable extends StatefulWidget{
+  Vegetable({Key key,this.username,this.contact,this.vendor}):super(key:key);
+  final String username;
+  final String contact;
+  final Map vendor;
+  @override
+  _VegetableState createState() => _VegetableState(username: username,contact: contact,vendor: vendor);
+}
 
-class VegetableList extends StatelessWidget {
-  VegetableList({Key key,this.username,this.contact,this.vendor}):super(key:key);
+class _VegetableState extends State<Vegetable> {
+  _VegetableState({Key key,this.username,this.contact,this.vendor});
   static final String path = "widget/cart.dart";
   final String username;
   final String contact;
   final Map vendor;
-  final List<Map> VegetableLists = [
+  final List<Map> vegetableLists = [
     {
       "name": 'Tomato',
       "price": 100,
@@ -43,6 +51,7 @@ class VegetableList extends StatelessWidget {
       'quantity':0,
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +62,7 @@ class VegetableList extends StatelessWidget {
           children: <Widget>[
             Flexible(
               child: ListView.builder(
-                itemCount: VegetableLists.length,
+                itemCount: vegetableLists.length,
                 itemBuilder: (context, int index) {
                   return cartItems(index);
                 },
@@ -90,7 +99,7 @@ class VegetableList extends StatelessWidget {
                     children: <Widget>[
                       Flexible(
                         child: Text(
-                          VegetableLists[index]['name'].toString(),
+                          vegetableLists[index]['name'].toString(),
                           overflow: TextOverflow.fade,
                           softWrap: true,
                           style: TextStyle(
@@ -106,7 +115,7 @@ class VegetableList extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        'Rs. '+VegetableLists[index]["price"].toString(),
+                        'Rs. '+vegetableLists[index]["price"].toString(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w300),
                       )
@@ -118,7 +127,7 @@ class VegetableList extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text('Rs. '+(VegetableLists[index]["price"]*VegetableLists[index]['quantity']).toString(),
+                      Text('Rs. '+(vegetableLists[index]["price"]*vegetableLists[index]['quantity']).toString(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w300,
@@ -137,9 +146,9 @@ class VegetableList extends StatelessWidget {
                         children: <Widget>[
                           InkWell(
                             onTap: () {
-                              if(VegetableLists[index]['quantity']>0){
-                                VegetableLists[index]['quantity']-=1;
-                                print(VegetableLists[index]['quantity']);
+                              if(vegetableLists[index]['quantity']>0){
+                                vegetableLists[index]['quantity']-=1;
+                                print(vegetableLists[index]['quantity']);
                               }
                             },
                             splashColor: Colors.redAccent.shade200,
@@ -163,7 +172,7 @@ class VegetableList extends StatelessWidget {
                           Card(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(VegetableLists[index]['quantity'].toString()),
+                              child: Text(vegetableLists[index]['quantity'].toString()),
                             ),
                           ),
                           SizedBox(
@@ -171,8 +180,8 @@ class VegetableList extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              VegetableLists[index]['quantity']+=1;
-                              print(VegetableLists[index]['quantity']);
+                              vegetableLists[index]['quantity']+=1;
+                              print(vegetableLists[index]['quantity']);
                             },
                             splashColor: Colors.lightBlue,
                             child: Container(
@@ -231,7 +240,7 @@ class VegetableList extends StatelessWidget {
               child: InkWell(
                 splashColor: Colors.redAccent,
                 onTap: () {
-                  navigateToConfirmation(context,username,contact,vendor);
+                  navigateToConfirmation(context,username,contact,vendor,vegetableLists);
                 },
                 child: Container(
                   width: double.infinity,
@@ -256,6 +265,7 @@ class VegetableList extends StatelessWidget {
   }
 }
 
-Future navigateToConfirmation(context,username,contact,Map vendor) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(username: username,contact: contact,vendor: vendor)));
+Future navigateToConfirmation(context,username,contact,Map vendor, List<Map> vegetableLists) async {
+  print(vegetableLists);
+  Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(username: username,contact: contact,vendor: vendor,vegetableList: vegetableLists,)));
 }

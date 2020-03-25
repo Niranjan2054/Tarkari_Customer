@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:tarkari_customer/widget/cart.dart';
 
 class DataTableExample extends StatefulWidget {
-  const DataTableExample({Key key}) : super(key: key);
+  const DataTableExample({Key key,this.vegetableList}) : super(key: key);
+  final List<Map> vegetableList;
 
   @override
-  _DataTableExampleState createState() => _DataTableExampleState();
+  _DataTableExampleState createState() => _DataTableExampleState(vegetableList: vegetableList);
 }
 
 class _DataTableExampleState extends State<DataTableExample> {
+  _DataTableExampleState({Key key,this.vegetableList});
+  final List<Map> vegetableList;
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   @override
   Widget build(BuildContext context) {
+    print('datatable');
+    print(vegetableList);
     return SingleChildScrollView(
       child: PaginatedDataTable(
         header: Text('Cart'),
@@ -22,7 +28,7 @@ class _DataTableExampleState extends State<DataTableExample> {
           });
         },
         columns: kTableColumns,
-        source: DessertDataSource(),
+        source: DessertDataSource(desserts: List<Dessert>.generate(vegetableList.length, (index) => Dessert(vegetableList[index]['name'], vegetableList[index]['price'], vegetableList[index]['quantity'], vegetableList[index]['price']*vegetableList[index]['quantity']))),
       ),
     );
   }
@@ -53,38 +59,33 @@ class Dessert {
   Dessert(this.name, this.rate, this.quantity, this.amount);
   final String name;
   final int rate;
-  final double quantity;
+  final int quantity;
   final int amount;
+}
+
+Dessert Convert(Map vegetable){
+  return new Dessert(vegetable['name'], vegetable['price'], vegetable['quantity'],  vegetable['price']* vegetable['quantity']);
 }
 
 ////// Data source class for obtaining row data for PaginatedDataTable.
 class DessertDataSource extends DataTableSource {
+  DessertDataSource({this.desserts});
   int _selectedCount = 0;
-  final List<Dessert> _desserts = <Dessert>[
-    new Dessert('Frozen yogurt', 159, 6.0, 24),
-    new Dessert('Ice cream sandwich', 237, 9.0, 37),
-    new Dessert('Eclair', 262, 16.0, 24),
-    new Dessert('Cupcake', 305, 3.7, 67),
-    new Dessert('Gingerbread', 356, 16.0, 49),
-    new Dessert('Jelly bean', 375, 0.0, 94),
-    new Dessert('Lollipop', 392, 0.2, 98),
-    new Dessert('Honeycomb', 408, 3.2, 87),
-    new Dessert('Donut', 452, 25.0, 51),
-    new Dessert('KitKat', 518, 26.0, 65),
-    new Dessert('Frozen yogurt with sugar', 168, 6.0, 26),
-    new Dessert('Ice cream sandwich with sugar', 246, 9.0, 39),
-    new Dessert('Eclair with sugar', 271, 16.0, 26),
-    new Dessert('Cupcake with sugar', 314, 3.7, 69),
-    new Dessert('Gingerbread with sugar', 345, 16.0, 51),
-    new Dessert('Jelly bean with sugar', 364, 0.0, 96),
-    new Dessert('Lollipop with sugar', 401, 0.2, 100),
-  ];
+  // final List<Map> vegetableList;
+  
+  List<Dessert> desserts;
+  
+  //  = <Dessert>[
+  //   new Dessert('Frozen yogurt', 159, 6.0, 24),
+  //   new Dessert('Ice cream sandwich', 237, 9.0, 37),
+  // ];
+  
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= _desserts.length) return null;
-    final Dessert dessert = _desserts[index];
+    if (index >= desserts.length) return null;
+    final Dessert dessert = desserts[index];
     return DataRow.byIndex(
         index: index,
         cells: <DataCell>[
@@ -96,7 +97,7 @@ class DessertDataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => _desserts.length;
+  int get rowCount => desserts.length;
 
   @override
   bool get isRowCountApproximate => false;

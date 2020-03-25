@@ -3,31 +3,37 @@ import 'package:tarkari_customer/widget/datatable.dart';
 
 
 class ConfirmationPage extends StatelessWidget {
-  ConfirmationPage({Key key, this.username,this.contact,this.vendor}):super(key:key);
+  ConfirmationPage({Key key, this.username,this.contact,this.vendor,this.vegetableList}):super(key:key);
   final String username;
   final String contact;
   final Map vendor;
+  final List<Map> vegetableList;
    // This widget is the root of your application.
    @override
    Widget build(BuildContext context) {
+     print('confirmation');
+     print(vegetableList);
       return MaterialApp(
          title: 'Hello World Demo Application',
          theme: ThemeData(
             primarySwatch: Colors.blue,
          ),
-         home: Confirmation(title: 'Confirmation Page',username: username,contact: contact,vendor: vendor,),
+         home: Confirmation(title: 'Confirmation Page',username: username,contact: contact,vendor: vendor,vegetableList: vegetableList,),
       );
    }
 }
 class Confirmation extends StatelessWidget {
-   Confirmation({Key key, this.title,this.username,this.contact,this.vendor}) : super(key: key);
+   Confirmation({Key key, this.title,this.username,this.contact,this.vendor,this.vegetableList}) : super(key: key);
    final String title;
    final String username;
    final String contact;
    final Map vendor;
+   final List<Map> vegetableList;
 
    @override
    Widget build(BuildContext context) {
+     print('Confirmation widget');
+     print(vegetableList);
       return Scaffold(
          appBar: AppBar(
             title: Text(this.title),
@@ -58,7 +64,7 @@ class Confirmation extends StatelessWidget {
                     child: Card(
                       child: Container(
                         padding: EdgeInsets.all(6),
-                        child: DataTableExample(),
+                        child: DataTableExample(vegetableList: vegetableList,),
                       ),
                     ),
                   ),

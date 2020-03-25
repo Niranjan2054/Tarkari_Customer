@@ -280,7 +280,7 @@ class _VendorListState extends State<VendorList> {
 
 Route _createRoute(String username,String contact,Map vendor) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => VegetableList(username: username,contact: contact,vendor: vendor,),
+    pageBuilder: (context, animation, secondaryAnimation) => Vegetable(username: username,contact: contact,vendor: vendor,),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
