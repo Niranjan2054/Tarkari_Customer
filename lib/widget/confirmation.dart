@@ -65,17 +65,14 @@ class Confirmation extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.all(7),
-                    child: Card(
                       child: Container(
                         padding: EdgeInsets.all(6),
                         child: DataTableExample(vegetableList: vegetableList,),
                       ),
-                    ),
                   ),
                   _checkoutSection(context,this.total)
                 ],
               ),
-
          ),
       );
    }

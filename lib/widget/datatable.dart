@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tarkari_customer/widget/cart.dart';
 
 class DataTableExample extends StatefulWidget {
   const DataTableExample({Key key,this.vegetableList}) : super(key: key);
@@ -12,11 +11,11 @@ class DataTableExample extends StatefulWidget {
 class _DataTableExampleState extends State<DataTableExample> {
   _DataTableExampleState({Key key,this.vegetableList});
   final List<Map> vegetableList;
+  List<Map> temp;
   int _rowsPerPage = 5;
   @override
   Widget build(BuildContext context) {
-    print('datatable');
-    print(vegetableList);
+    temp = vegetableList.where((vegetable)=>vegetable['quantity']>0).toList();
     return SingleChildScrollView(
       child: PaginatedDataTable(
         header: Text('Cart'),
@@ -28,7 +27,7 @@ class _DataTableExampleState extends State<DataTableExample> {
           });
         },
         columns: kTableColumns,
-        source: DessertDataSource(desserts: List<Dessert>.generate(vegetableList.length, (index) => Dessert(index+1,vegetableList[index]['name'], vegetableList[index]['price'], vegetableList[index]['quantity'], vegetableList[index]['price']*vegetableList[index]['quantity']))),
+        source: DessertDataSource(desserts: List<Dessert>.generate(temp.length, (index) => Dessert(index+1,temp[index]['name'], temp[index]['price'], temp[index]['quantity'], temp[index]['price']*temp[index]['quantity']))),
       ),
     );
   }

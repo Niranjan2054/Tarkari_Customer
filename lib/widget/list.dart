@@ -58,7 +58,7 @@ class _VendorListState extends State<VendorList> {
           "https://cdn.pixabay.com/photo/2017/01/31/13/14/animal-2023924_960_720.png"
     },
     {
-      "name": "Jagati Alu Pyaj Bhandar",
+      "name": "Jagati Alu Pyaj Bhandar1",
       "location": "Jagati, Bhaktapur",
       "contact": "9843******",
       "logoText":
