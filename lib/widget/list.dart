@@ -16,8 +16,8 @@ class _VendorListState extends State<VendorList> {
   final TextStyle dropdownMenuItem =
       TextStyle(color: Colors.black, fontSize: 18);
 
-  final primary = Color(0xff696b9e);
-  final secondary = Color(0xfff29a94);
+  final Color primary = Colors.blue;
+  final Color secondary = Colors.black;
   final _formKey = GlobalKey<FormState>();
 
 
@@ -160,7 +160,9 @@ class _VendorListState extends State<VendorList> {
                         child: TextField(
                           key: _formKey,
                           onChanged: (text){
-                            print(text);
+                            setState(() {
+                              
+                            });;
                           },
                           // controller: TextEditingController(text: locations[0]),
                           cursorColor: Theme.of(context).primaryColor,
@@ -227,7 +229,7 @@ class _VendorListState extends State<VendorList> {
                   Text(
                     VendorLists[index]['name'],
                     style: TextStyle(
-                        color: primary,
+                        color: secondary,
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
                   ),
@@ -246,7 +248,7 @@ class _VendorListState extends State<VendorList> {
                       ),
                       Text(VendorLists[index]['location'],
                           style: TextStyle(
-                              color: primary, fontSize: 13, letterSpacing: .3)),
+                              color: secondary, fontSize: 13, letterSpacing: .3)),
                     ],
                   ),
                   SizedBox(
@@ -264,7 +266,7 @@ class _VendorListState extends State<VendorList> {
                       ),
                       Text(VendorLists[index]['contact'],
                           style: TextStyle(
-                              color: primary, fontSize: 13, letterSpacing: .3)),
+                              color: secondary, fontSize: 13, letterSpacing: .3)),
                     ],
                   ),
                 ],

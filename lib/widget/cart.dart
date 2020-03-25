@@ -248,7 +248,7 @@ class _VegetableState extends State<Vegetable> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Material(
-              color: Colors.red,
+              color: Colors.blue,
               elevation: 1.0,
               child: InkWell(
                 splashColor: Colors.redAccent,

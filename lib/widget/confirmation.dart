@@ -116,7 +116,7 @@ Widget _checkoutSection(BuildContext context,int total) {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Material(
-            color: Colors.red,
+            color: Colors.blue,
             elevation: 1.0,
             child: InkWell(
               splashColor: Colors.blueAccent,
