@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tarkari_customer/widget/cart.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class VendorList extends StatefulWidget {
   VendorList({Key key,this.username,this.contact}) : super(key: key);
   static final String path = "lib/src/pages/lists/list2.dart";
@@ -19,7 +21,7 @@ class _VendorListState extends State<VendorList> {
   final Color primary = Colors.blue;
   final Color secondary = Colors.black;
   final _formKey = GlobalKey<FormState>();
-  
+  // final databaseReference = FirebaseDatabase.instance.reference();
 
   List<Map> VendorLists = [
     {
@@ -85,14 +87,37 @@ class _VendorListState extends State<VendorList> {
       "logoText":
           "https://cdn.pixabay.com/photo/2017/01/13/01/22/rocket-1976107_960_720.png"
     },
-
     
   ];
   bool change = false;
   List<Map>  temp;
+  QuerySnapshot querySnapshot;
+
+  // void getData(BuildContext context){
+  //   print('nepal');
+    
+  // }
+   @override
+  void initState() {
+    super.initState();
+    getDriversList().then((results) {
+      setState(() {
+        print('helow');
+        querySnapshot = results;
+        print(querySnapshot);
+      });
+    });
+  }
+
+
+  getDriversList() async {
+    return await Firestore.instance.collection('vendors').getDocuments();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("How are you");
+    // getData(context);
     return Scaffold(
       backgroundColor: Color(0xfff0f0f0),
       body: SingleChildScrollView(

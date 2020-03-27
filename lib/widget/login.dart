@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tarkari_customer/widget/assets.dart';
-import 'package:tarkari_customer/widget/list.dart';
+import 'package:tarkari_customer/widget/firebase.dart';
 
 class LoginFourPage extends StatelessWidget {
   static final String path = "widget/login.dart";
@@ -114,5 +114,5 @@ class LoginFourPage extends StatelessWidget {
 }
 
 Future navigateToList(context,username,contact) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => VendorList(username: username,contact: contact,)));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => LoadDataFromFirestore()));
 }
