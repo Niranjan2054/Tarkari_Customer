@@ -4,15 +4,16 @@ import 'package:tarkari_customer/widget/cart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VendorList extends StatefulWidget {
-  VendorList({Key key,this.username,this.contact}) : super(key: key);
+  VendorList({Key key, this.username, this.contact}) : super(key: key);
   static final String path = "lib/src/pages/lists/list2.dart";
   final String username;
   final String contact;
-  _VendorListState createState() => _VendorListState(username: username,contact:contact);
+  _VendorListState createState() =>
+      _VendorListState(username: username, contact: contact);
 }
 
 class _VendorListState extends State<VendorList> {
-  _VendorListState({Key key, this.username,this.contact});
+  _VendorListState({Key key, this.username, this.contact});
   final String username;
   final String contact;
   final TextStyle dropdownMenuItem =
@@ -87,17 +88,16 @@ class _VendorListState extends State<VendorList> {
       "logoText":
           "https://cdn.pixabay.com/photo/2017/01/13/01/22/rocket-1976107_960_720.png"
     },
-    
   ];
   bool change = false;
-  List<Map>  temp;
+  List<Map> temp;
   QuerySnapshot querySnapshot;
 
   // void getData(BuildContext context){
   //   print('nepal');
-    
+
   // }
-   @override
+  @override
   void initState() {
     super.initState();
     getDriversList().then((results) {
@@ -108,7 +108,6 @@ class _VendorListState extends State<VendorList> {
       });
     });
   }
-
 
   getDriversList() async {
     return await Firestore.instance.collection('vendors').getDocuments();
@@ -131,12 +130,14 @@ class _VendorListState extends State<VendorList> {
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
                 child: ListView.builder(
-                    itemCount: (change)?temp.length:VendorLists.length,
+                    itemCount: (change) ? temp.length : VendorLists.length,
                     itemBuilder: (BuildContext context, int index) {
-                      if(change){
-                        return buildListTemp(context, index,this.username,this.contact);
-                      }else{
-                        return buildList(context, index,this.username,this.contact);
+                      if (change) {
+                        return buildListTemp(
+                            context, index, this.username, this.contact);
+                      } else {
+                        return buildList(
+                            context, index, this.username, this.contact);
                       }
                     }),
               ),
@@ -190,12 +191,19 @@ class _VendorListState extends State<VendorList> {
                         borderRadius: BorderRadius.all(Radius.circular(30)),
                         child: TextField(
                           key: _formKey,
-                          onChanged: (text){
+                          onChanged: (text) {
                             setState(() {
                               change = true;
-                              temp=VendorLists.where((vendor) => (vendor['name']+vendor['location'].toString()+vendor['contact'].toString()).toString().toLowerCase().contains(text.toLowerCase())).toList();
+                              temp = VendorLists.where((vendor) =>
+                                  (vendor['name'] +
+                                          vendor['location'].toString() +
+                                          vendor['contact'].toString())
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(text.toLowerCase())).toList();
                               print(temp);
-                            });;
+                            });
+                            ;
                           },
                           // controller: TextEditingController(text: locations[0]),
                           cursorColor: Theme.of(context).primaryColor,
@@ -226,180 +234,196 @@ class _VendorListState extends State<VendorList> {
     );
   }
 
-  Widget buildList(BuildContext context, int index,String username,String contact) {
+  Widget buildList(
+      BuildContext context, int index, String username, String contact) {
     return FlatButton(
-      onPressed: (){
-        Navigator.of(context).push(_createRoute(username,contact,VendorLists[index]));
-      }, 
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: Colors.white,
-        ),
-        width: double.infinity,
-        height: 110,
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: 50,
-              height: 50,
-              margin: EdgeInsets.only(right: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(width: 3, color: secondary),
-                image: DecorationImage(
-                    image: CachedNetworkImageProvider(VendorLists[index]['logoText']),
-                    fit: BoxFit.fill),
+        onPressed: () {
+          Navigator.of(context)
+              .push(_createRoute(username, contact, VendorLists[index]));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+          ),
+          width: double.infinity,
+          height: 110,
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: 50,
+                height: 50,
+                margin: EdgeInsets.only(right: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(width: 3, color: secondary),
+                  image: DecorationImage(
+                      image: CachedNetworkImageProvider(
+                          VendorLists[index]['logoText']),
+                      fit: BoxFit.fill),
+                ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    VendorLists[index]['name'],
-                    style: TextStyle(
-                        color: secondary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.location_on,
-                        color: secondary,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(VendorLists[index]['location'],
-                          style: TextStyle(
-                              color: secondary, fontSize: 13, letterSpacing: .3)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.contact_phone,
-                        color: secondary,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(VendorLists[index]['contact'],
-                          style: TextStyle(
-                              color: secondary, fontSize: 13, letterSpacing: .3)),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      )
-    );
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      VendorLists[index]['name'],
+                      style: TextStyle(
+                          color: secondary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.location_on,
+                          color: secondary,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(VendorLists[index]['location'],
+                            style: TextStyle(
+                                color: secondary,
+                                fontSize: 13,
+                                letterSpacing: .3)),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.contact_phone,
+                          color: secondary,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(VendorLists[index]['contact'],
+                            style: TextStyle(
+                                color: secondary,
+                                fontSize: 13,
+                                letterSpacing: .3)),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
-  Widget buildListTemp(BuildContext context, int index,String username,String contact) {
+
+  Widget buildListTemp(
+      BuildContext context, int index, String username, String contact) {
     return FlatButton(
-      onPressed: (){
-        Navigator.of(context).push(_createRoute(username,contact,temp[index]));
-      }, 
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: Colors.white,
-        ),
-        width: double.infinity,
-        height: 110,
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: 50,
-              height: 50,
-              margin: EdgeInsets.only(right: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(width: 3, color: secondary),
-                image: DecorationImage(
-                    image: CachedNetworkImageProvider(temp[index]['logoText']),
-                    fit: BoxFit.fill),
+        onPressed: () {
+          Navigator.of(context)
+              .push(_createRoute(username, contact, temp[index]));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+          ),
+          width: double.infinity,
+          height: 110,
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: 50,
+                height: 50,
+                margin: EdgeInsets.only(right: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(width: 3, color: secondary),
+                  image: DecorationImage(
+                      image:
+                          CachedNetworkImageProvider(temp[index]['logoText']),
+                      fit: BoxFit.fill),
+                ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    temp[index]['name'],
-                    style: TextStyle(
-                        color: secondary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.location_on,
-                        color: secondary,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(temp[index]['location'],
-                          style: TextStyle(
-                              color: secondary, fontSize: 13, letterSpacing: .3)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.contact_phone,
-                        color: secondary,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(temp[index]['contact'],
-                          style: TextStyle(
-                              color: secondary, fontSize: 13, letterSpacing: .3)),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      )
-    );
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      temp[index]['name'],
+                      style: TextStyle(
+                          color: secondary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.location_on,
+                          color: secondary,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(temp[index]['location'],
+                            style: TextStyle(
+                                color: secondary,
+                                fontSize: 13,
+                                letterSpacing: .3)),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.contact_phone,
+                          color: secondary,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(temp[index]['contact'],
+                            style: TextStyle(
+                                color: secondary,
+                                fontSize: 13,
+                                letterSpacing: .3)),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
 
-
-Route _createRoute(String username,String contact,Map vendor) {
+Route _createRoute(String username, String contact, Map vendor) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => Vegetable(username: username,contact: contact,vendor: vendor,),
+    pageBuilder: (context, animation, secondaryAnimation) => Vegetable(
+      username: username,
+      contact: contact,
+      vendor: vendor,
+    ),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
