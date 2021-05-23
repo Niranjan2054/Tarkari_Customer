@@ -1,4 +1,4 @@
-import 'package:tarkari_customer/widget/color.dart';
+import 'package:tarkari_customer/component/assets.dart';
 import 'package:flutter/material.dart';
 
 class RoundedContainer extends StatelessWidget {
@@ -19,7 +19,7 @@ class RoundedContainer extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   final BorderRadius borderRadius;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tarkari_customer/widget/assets.dart';
-import 'package:tarkari_customer/widget/list.dart';
+import 'package:tarkari_customer/component/assets.dart';
+import 'package:tarkari_customer/views/cart.dart';
 
-class LoginFourPage extends StatelessWidget {
-  static final String path = "widget/login.dart";
+class LoginPage extends StatelessWidget {
   final String background = loginBack;
   final _formkey = GlobalKey<FormState>();
   final username = TextEditingController();
@@ -102,7 +101,6 @@ class LoginFourPage extends StatelessWidget {
                               child: RaisedButton(
                                 child: Text("Sign In".toUpperCase()),
                                 onPressed: () {
-                                  print(username.text + " \n" + contact.text);
                                   navigateToList(
                                       context, username.text, contact.text);
                                 },
@@ -126,5 +124,5 @@ Future navigateToList(context, username, contact) async {
       context,
       MaterialPageRoute(
           builder: (context) =>
-              VendorList(username: username, contact: contact)));
+              Vegetable(username: username, contact: contact)));
 }

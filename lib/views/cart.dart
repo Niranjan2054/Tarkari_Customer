@@ -1,64 +1,59 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tarkari_customer/widget/rounded_bordered_container.dart';
-import 'package:tarkari_customer/widget/animation.dart';
-import 'package:tarkari_customer/widget/confirmation.dart';
+import 'package:tarkari_customer/component/rounded_bordered_container.dart';
+import 'package:tarkari_customer/component/assets.dart';
+import 'package:tarkari_customer/views/confirmation.dart';
 
-class Vegetable extends StatefulWidget{
-  Vegetable({Key key,this.username,this.contact,this.vendor}):super(key:key);
+class Vegetable extends StatefulWidget {
+  Vegetable({Key key, this.username, this.contact}) : super(key: key);
   final String username;
   final String contact;
-  final Map vendor;
   @override
-  _VegetableState createState() => _VegetableState(username: username,contact: contact,vendor: vendor);
+  _VegetableState createState() => _VegetableState();
 }
 
 class _VegetableState extends State<Vegetable> {
-  _VegetableState({Key key,this.username,this.contact,this.vendor});
-  static final String path = "widget/cart.dart";
-  final String username;
-  final String contact;
-  final Map vendor;
   final List<Map> vegetableLists = [
     {
       "name": 'Tomato',
       "price": 100,
       "image": 'assets/tomato.png',
-      'quantity':0,
+      'quantity': 0,
     },
     {
       "name": 'Potato',
       "price": 100,
       "image": 'assets/tomato.png',
-      'quantity':0,
+      'quantity': 0,
     },
     {
       "name": 'Brinjal',
       "price": 10,
       "image": 'assets/tomato.png',
-      'quantity':0,
+      'quantity': 0,
     },
     {
       "name": 'CauliFlower',
       "price": 100,
       "image": 'assets/tomato.png',
-      'quantity':0,
+      'quantity': 0,
     },
     {
       "name": 'Cabbage',
       "price": 100,
       "image": 'assets/tomato.png',
-      'quantity':0,
+      'quantity': 0,
     },
   ];
-  int total=0;
-   void calculateTotal(){
-     this.total =0;
-     for (var i = 0; i < vegetableLists.length; i++) {
-       this.total += vegetableLists[i]['price'] * vegetableLists[i]['quantity'];
-       print(this.total);
-     }
-   }
+  int total = 0;
+  void calculateTotal() {
+    this.total = 0;
+    for (var i = 0; i < vegetableLists.length; i++) {
+      this.total += vegetableLists[i]['price'] * vegetableLists[i]['quantity'];
+      print(this.total);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +70,7 @@ class _VegetableState extends State<Vegetable> {
                 },
               ),
             ),
-            _checkoutSection(context,total)
+            _checkoutSection(context, total)
           ],
         ));
   }
@@ -90,18 +85,19 @@ class _VegetableState extends State<Vegetable> {
           Container(
             width: 130,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(images[1]),
-                fit: BoxFit.cover,
-              )
-            ),
+                image: DecorationImage(
+              image: CachedNetworkImageProvider(images[1]),
+              fit: BoxFit.cover,
+            )),
           ),
           Flexible(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     children: <Widget>[
                       Flexible(
@@ -122,7 +118,7 @@ class _VegetableState extends State<Vegetable> {
                         width: 5,
                       ),
                       Text(
-                        'Rs. '+vegetableLists[index]["price"].toString(),
+                        'Rs. ' + vegetableLists[index]["price"].toString(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w300),
                       )
@@ -134,7 +130,11 @@ class _VegetableState extends State<Vegetable> {
                       SizedBox(
                         width: 5,
                       ),
-                      Text('Rs. '+(vegetableLists[index]["price"]*vegetableLists[index]['quantity']).toString(),
+                      Text(
+                          'Rs. ' +
+                              (vegetableLists[index]["price"] *
+                                      vegetableLists[index]['quantity'])
+                                  .toString(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w300,
@@ -154,11 +154,11 @@ class _VegetableState extends State<Vegetable> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if(vegetableLists[index]['quantity']>0){
-                                vegetableLists[index]['quantity']-=1;
-                                calculateTotal();
-                                print(vegetableLists[index]['quantity']);
-                              }
+                                if (vegetableLists[index]['quantity'] > 0) {
+                                  vegetableLists[index]['quantity'] -= 1;
+                                  calculateTotal();
+                                  print(vegetableLists[index]['quantity']);
+                                }
                               });
                             },
                             splashColor: Colors.redAccent.shade200,
@@ -182,7 +182,8 @@ class _VegetableState extends State<Vegetable> {
                           Card(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(vegetableLists[index]['quantity'].toString()),
+                              child: Text(
+                                  vegetableLists[index]['quantity'].toString()),
                             ),
                           ),
                           SizedBox(
@@ -191,9 +192,9 @@ class _VegetableState extends State<Vegetable> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                vegetableLists[index]['quantity']+=1;
+                                vegetableLists[index]['quantity'] += 1;
                                 calculateTotal();
-                                print(vegetableLists[index]['quantity']);  
+                                print(vegetableLists[index]['quantity']);
                               });
                             },
                             splashColor: Colors.lightBlue,
@@ -224,7 +225,7 @@ class _VegetableState extends State<Vegetable> {
     );
   }
 
-  Widget _checkoutSection(BuildContext context,int total) {
+  Widget _checkoutSection(BuildContext context, int total) {
     return Material(
       color: Colors.black12,
       child: Column(
@@ -240,7 +241,7 @@ class _VegetableState extends State<Vegetable> {
                   ),
                   Spacer(),
                   Text(
-                    "Rs. "+total.toString(),
+                    "Rs. " + total.toString(),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   )
                 ],
@@ -253,7 +254,8 @@ class _VegetableState extends State<Vegetable> {
               child: InkWell(
                 splashColor: Colors.redAccent,
                 onTap: () {
-                  navigateToConfirmation(context,username,contact,vendor,vegetableLists);
+                  navigateToConfirmation(
+                      context, widget.username, widget.contact, vegetableLists);
                 },
                 child: Container(
                   width: double.infinity,
@@ -278,6 +280,16 @@ class _VegetableState extends State<Vegetable> {
   }
 }
 
-Future navigateToConfirmation(context,username,contact,Map vendor, List<Map> vegetableLists) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(username: username,contact: contact,vendor: vendor,vegetableList: vegetableLists,)));
+Future navigateToConfirmation(
+    context, username, contact, List<Map> vegetableLists) async {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ConfirmationPage(
+        username: username,
+        contact: contact,
+        vegetableList: vegetableLists,
+      ),
+    ),
+  );
 }

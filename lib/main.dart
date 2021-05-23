@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tarkari_customer/widget/SplashScreen.dart';
+import 'package:tarkari_customer/views/SplashScreen.dart';
 
 void main() => runApp(MyApp());
 

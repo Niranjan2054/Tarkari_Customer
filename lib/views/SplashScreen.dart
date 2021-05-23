@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tarkari_customer/widget/login.dart';
-// import 'package:khwopa_app/widget/onboard.dart';
+import 'package:tarkari_customer/views/login.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -19,7 +18,8 @@ class Splash extends State<SplashScreen> {
   Widget build(BuildContext context) {
     Timer(
         Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => LoginFourPage())));
+        () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => LoginPage())));
 
     return Scaffold(
       body: Container(
@@ -33,7 +33,11 @@ class Splash extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Image.asset('assets/tomato.png',width: 150,height: 150,),
+                Image.asset(
+                  'assets/tomato.png',
+                  width: 150,
+                  height: 150,
+                ),
                 Text('We Serve Vegetable to your Home.',
                     style: TextStyle(fontFamily: 'Lobster'))
               ]),
