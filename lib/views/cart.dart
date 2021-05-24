@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:tarkari_customer/component/rounded_bordered_container.dart';
 import 'package:tarkari_customer/component/assets.dart';
 import 'package:tarkari_customer/views/confirmation.dart';
+import 'package:tarkari_customer/process/Storage.dart';
+import 'dart:convert';
 
 class Vegetable extends StatefulWidget {
   Vegetable({Key key, this.username, this.contact}) : super(key: key);
@@ -13,38 +15,54 @@ class Vegetable extends StatefulWidget {
 }
 
 class _VegetableState extends State<Vegetable> {
-  final List<Map> vegetableLists = [
-    {
-      "name": 'Tomato',
-      "price": 100,
-      "image": 'assets/tomato.png',
-      'quantity': 0,
-    },
-    {
-      "name": 'Potato',
-      "price": 100,
-      "image": 'assets/tomato.png',
-      'quantity': 0,
-    },
-    {
-      "name": 'Brinjal',
-      "price": 10,
-      "image": 'assets/tomato.png',
-      'quantity': 0,
-    },
-    {
-      "name": 'CauliFlower',
-      "price": 100,
-      "image": 'assets/tomato.png',
-      'quantity': 0,
-    },
-    {
-      "name": 'Cabbage',
-      "price": 100,
-      "image": 'assets/tomato.png',
-      'quantity': 0,
-    },
-  ];
+  // final List<Map> vegetableLists = [
+  //   {
+  //     "name": 'Tomato',
+  //     "price": 100,
+  //     "image": 'assets/tomato.png',
+  //     'quantity': 0,
+  //   },
+  //   {
+  //     "name": 'Potato',
+  //     "price": 100,
+  //     "image": 'assets/tomato.png',
+  //     'quantity': 0,
+  //   },
+  //   {
+  //     "name": 'Brinjal',
+  //     "price": 10,
+  //     "image": 'assets/tomato.png',
+  //     'quantity': 0,
+  //   },
+  //   {
+  //     "name": 'CauliFlower',
+  //     "price": 100,
+  //     "image": 'assets/tomato.png',
+  //     'quantity': 0,
+  //   },
+  //   {
+  //     "name": 'Cabbage',
+  //     "price": 100,
+  //     "image": 'assets/tomato.png',
+  //     'quantity': 0,
+  //   },
+  // ];
+  // Get the vegetable stored before --start
+  Storage storage;
+  List vegetableLists;
+  int length = 0;
+  void getData() async {
+    storage = new Storage('vegetable');
+    storage.readData().then((String value) {
+      setState(() {
+        this.vegetableLists = json.decode(value);
+        print(this.vegetableLists);
+        this.length = vegetableLists.length;
+      });
+    });
+  }
+  // Get the vegetable stored before --end
+
   int total = 0;
   void calculateTotal() {
     this.total = 0;
@@ -52,6 +70,12 @@ class _VegetableState extends State<Vegetable> {
       this.total += vegetableLists[i]['price'] * vegetableLists[i]['quantity'];
       print(this.total);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
   }
 
   @override
