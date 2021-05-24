@@ -181,7 +181,7 @@ class _VegetableState extends State<Vegetable> {
                                 if (vegetableLists[index]['quantity'] > 0) {
                                   vegetableLists[index]['quantity'] -= 1;
                                   calculateTotal();
-                                  print(vegetableLists[index]['quantity']);
+                                  print(vegetableLists);
                                 }
                               });
                             },
@@ -218,7 +218,7 @@ class _VegetableState extends State<Vegetable> {
                               setState(() {
                                 vegetableLists[index]['quantity'] += 1;
                                 calculateTotal();
-                                print(vegetableLists[index]['quantity']);
+                                print(vegetableLists);
                               });
                             },
                             splashColor: Colors.lightBlue,
@@ -305,7 +305,7 @@ class _VegetableState extends State<Vegetable> {
 }
 
 Future navigateToConfirmation(
-    context, username, contact, List<Map> vegetableLists) async {
+    context, username, contact, List vegetableLists) async {
   Navigator.push(
     context,
     MaterialPageRoute(

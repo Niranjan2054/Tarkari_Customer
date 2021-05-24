@@ -6,10 +6,11 @@ class ConfirmationPage extends StatelessWidget {
       : super(key: key);
   final String username;
   final String contact;
-  final List<Map> vegetableList;
+  final List vegetableList;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("Here");
     return MaterialApp(
       title: 'Online Vegetables',
       theme: ThemeData(
@@ -27,19 +28,15 @@ class ConfirmationPage extends StatelessWidget {
 
 class Confirmation extends StatelessWidget {
   Confirmation(
-      {Key key,
-      this.title,
-      this.username,
-      this.contact,
-      this.vendor,
-      this.vegetableList})
+      {Key key, this.title, this.username, this.contact, this.vegetableList})
       : super(key: key);
   final String title;
   final String username;
   final String contact;
-  final Map vendor;
-  final List<Map> vegetableList;
+  final List vegetableList;
   int total = 0;
+
+  // may be the indexing is the problem
   void calculateTotal() {
     for (var i = 0; i < vegetableList.length; i++) {
       this.total += vegetableList[i]['price'] * vegetableList[i]['quantity'];
@@ -49,6 +46,8 @@ class Confirmation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Map> vegs =
+        (vegetableList as List).map((itemWord) => Map.of(itemWord)).toList();
     calculateTotal();
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +76,7 @@ class Confirmation extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(6),
                 child: DataTableExample(
-                  vegetableList: vegetableList,
+                  vegetableList: vegs,
                 ),
               ),
             ),
